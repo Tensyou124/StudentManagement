@@ -3,7 +3,7 @@ package student.management.StudentManagement.service;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import student.management.StudentManagement.data.StudentCourses;
+import student.management.StudentManagement.data.Courses;
 import student.management.StudentManagement.data.Student;
 import student.management.StudentManagement.repository.StudentRepository;
 
@@ -21,7 +21,7 @@ public class StudentService {
     return repository.searchStudents();
   }
 
-  public List<StudentCourses> getCourseList() {
+  public List<Courses> getCourseList() {
     return repository.searchCourses();
   }
 }
