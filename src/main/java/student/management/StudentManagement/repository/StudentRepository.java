@@ -10,7 +10,7 @@ import student.management.StudentManagement.data.StudentCourses;
 @Mapper
 public interface StudentRepository {
 
-  @Select("SELECT * FROM students WHERE age >= 30 and age < 40")
+  @Select("SELECT * FROM students")
   List<Student> searchStudents();
 
   @Select("SELECT * FROM students_courses WHERE id = 1")
