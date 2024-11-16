@@ -13,7 +13,7 @@ public interface StudentRepository {
   @Select("SELECT * FROM students WHERE age >= 30 and age < 40")
   List<Student> searchStudents();
 
-  @Select("SELECT * FROM students_courses WHERE id = 1")
+  @Select("SELECT * FROM students_courses WHERE id = 3")
   List<StudentCourses> searchCourses();
 }
 
