@@ -1,6 +1,5 @@
 package student.management.StudentManagement.data;
 
-import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,4 +15,6 @@ public class Student {
   private String area;
   private int age;
   private String gender;
+  private String remark;
+  private boolean isDeleted;
 }
