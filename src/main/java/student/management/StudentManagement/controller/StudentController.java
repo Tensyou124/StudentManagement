@@ -27,7 +27,7 @@ public class StudentController {
     List<Student> students = service.searchStudentList();
     List<StudentCourses> studentCourses = service.searchCourseList();
 
-    model.addAttribute("studentlist", converter.convertStudentDetails(students, studentCourses));
+    model.addAttribute("studentList", converter.convertStudentDetails(students, studentCourses));
     return "studentList";
   }
 
