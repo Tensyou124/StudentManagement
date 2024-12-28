@@ -1,5 +1,7 @@
 package student.management.StudentManagement.data;
 
+import com.fasterxml.jackson.annotation.JsonTypeId;
+import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,3 +20,4 @@ public class Student {
   private String remark;
   private boolean isDeleted;
 }
+
