@@ -34,12 +34,23 @@
         margin-bottom: 15px;
     }
 
-    label {
-        margin-bottom: 5px;
+    .from-group label {
+        margin-bottom: 10px;
+        display: inline-block;
+        width: 100px;
+        text-align: center;
+        text-align-last: justify;
         font-weight: bold;
+        margin-right: 15px;
+         font-family: monospace;
     }
 
-    input {
+    .from-group label2 {
+        width: -95px;
+    }
+
+    .form-group input {
+        flex: 1;
         padding: 8px;
         font-size: 16px;
         border: 1px solid #ccc;
@@ -65,45 +76,48 @@
 <body>
 <h1>受講生登録</h1>
 <form th:action="@{/registerStudent}" th:object="${student}" method="post">
-  <div>
-    <label for="name">名　　　　　前 :</label>
+  <div class="from-group">
+    <label for="name">名前</label>
+    <label2 for="name">:</label2>
     <input type="text" id="name" th:field="*{student.name}" required  />
   </div>
-  <div>
-    <label for="furigana">フ　リ　ガ　ナ :</label>
+  <div class="from-group">
+    <label for="furigana">フリガナ</label>
+    <label2 for="furigana">:</label2>
     <input type="text" id="furigana" th:field="*{student.furigana}" required  />
   </div>
-  <div>
-    <label for="nickname">ニ ッ ク ネ ー ム:</label>
+  <div class="from-group">
+    <label for="nickname">ニックネーム</label>
+    <label2 for="nickname">:</label2>
     <input type="text" id="nickname" th:field="*{student.nickname}" required  />
   </div>
-  <div>
-    <label for="email">メールアドレス :</label>
+  <div class="from-group">
+    <label for="email">メールアドレス</label>
+    <label2 for="email">:</label2>
     <input type="email" id="email" th:field="*{student.email}" required  />
   </div>
-  <div>
-    <label for="area">地　　　　　域 :</label>
+  <div class="from-group">
+    <label for="area">地域</label>
+    <label2 for="area">:</label2>
     <input type="text" id="area" th:field="*{student.area}" required  />
   </div>
-  <div>
-    <label for="age">年　　　　　齢 :</label>
+  <div class="from-group">
+    <label for="age">年齢</label>
+    <label2 for="age">:</label2>
     <input type="text" id="age" th:field="*{student.age}" required  />
   </div>
-  <div>
-    <label for="gender">性　　　　　別 :</label>
+  <div class="from-group">
+    <label for="gender">性別</label>
+    <label2 for="gender">:</label2>
     <input type="text" id="gender" th:field="*{student.gender}" required  />
   </div>
-  <div>
-    <label for="remark">備　　　　　考 :</label>
-    <input type="text" id="remark" th:field="*{student.remark}" required  />
+  <div class="from-group">
+    <label for="remark">備考</label>
+    <label2 for="remark">:</label2>
+    <input type="text" id="remark" th:field="*{student.remark}" />
   </div>
 
-
-  <div>
     <button type="submit">登録</button>
-  </div>
 </form>
-
-
 </body>
 </html>
