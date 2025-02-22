@@ -54,6 +54,15 @@ public class StudentController {
     return "redirect:/studentList";
   }
 
+  @PostMapping("/updateStudent")
+  public String updateStudent(@ModelAttribute StudentDetail studentDetail, BindingResult result) {
+    if (result.hasErrors()) {
+      return "updateStudent";
+    }
+    service.updateStudent(studentDetail);
+    return "redirect:/studentList";
+  }
+
   @GetMapping("/students/{id}")
   public String getStudentDetail(@PathVariable int id, Model model) {
     Student student = service.getStudentById(id);
