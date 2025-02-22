@@ -7,10 +7,12 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import student.management.StudentManagement.controller.converter.StudentConverter;
 import student.management.StudentManagement.data.Student;
-import student.management.StudentManagement.data.StudentCourses;
+import student.management.StudentManagement.data.StudentsCourses;
 import student.management.StudentManagement.domain.StudentDetail;
 import student.management.StudentManagement.service.StudentService;
 
@@ -29,36 +31,41 @@ public class StudentController {
   @GetMapping("/studentList")
   public String getStudentList(Model model) {
     List<Student> students = service.searchStudentList();
-    List<StudentCourses> studentCourses = service.searchCourseList();
-
-    model.addAttribute("studentList", converter.convertStudentDetails(students, studentCourses));
+    List<StudentsCourses> studentsCourses = service.searchCourseList();
+    model.addAttribute("studentList", converter.convertStudentDetails(students, studentsCourses));
     return "studentList";
-  }
-
-  @GetMapping("/studentCourseList")
-  public List<StudentCourses> getStudentsCourseList() {
-    return service.searchCourseList();
   }
 
   @GetMapping("/newStudent")
   public String newStudent(Model model) {
     StudentDetail studentDetail = new StudentDetail();
-    studentDetail.setStudent(new Student());
-    model.addAttribute("student" , new StudentDetail());
+    studentDetail.setStudentsCourses(List.of(new StudentsCourses()));
+    model.addAttribute("studentDetail", studentDetail);
     return "registerStudent";
   }
 
   @PostMapping("/registerStudent")
-  public String registerStudent(@ModelAttribute("student") StudentDetail studentDetail, BindingResult result) {
-    //エラーが発生した際に戻る
+  public String registerStudent(@ModelAttribute StudentDetail studentDetail, BindingResult result, Model model) {
     if (result.hasErrors()) {
+      model.addAttribute("studentDetail", studentDetail);
       return "registerStudent";
     }
-
     service.registerStudent(studentDetail);
-
-    //新規受講生情報を登録する処理を実装
-    //コース情報も一緒に登録できるようにする。※コースは単体でよい。
     return "redirect:/studentList";
+  }
+
+  @GetMapping("/students/{id}")
+  public String getStudentDetail(@PathVariable int id, Model model) {
+    Student student = service.getStudentById(id);
+    List<StudentsCourses> studentCourses = service.getCoursesByStudentId(id);
+
+    StudentDetail studentDetail = new StudentDetail();
+    studentDetail.setId(student.getId());
+    studentDetail.setName(student.getName());
+    studentDetail.setAge(student.getAge());
+    studentDetail.setStudentsCourses(studentCourses);
+
+    model.addAttribute("StudentDetail", studentDetail);
+    return "registerStudent";
   }
 }
