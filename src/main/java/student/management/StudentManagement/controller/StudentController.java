@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import student.management.StudentManagement.controller.converter.StudentConverter;
 import student.management.StudentManagement.data.Student;
 import student.management.StudentManagement.data.StudentsCourses;
@@ -45,9 +44,8 @@ public class StudentController {
   }
 
   @PostMapping("/registerStudent")
-  public String registerStudent(@ModelAttribute StudentDetail studentDetail, BindingResult result, Model model) {
+  public String registerStudent(@ModelAttribute StudentDetail studentDetail, BindingResult result) {
     if (result.hasErrors()) {
-      model.addAttribute("studentDetail", studentDetail);
       return "registerStudent";
     }
     service.registerStudent(studentDetail);
@@ -64,17 +62,10 @@ public class StudentController {
   }
 
   @GetMapping("/students/{id}")
-  public String getStudentDetail(@PathVariable int id, Model model) {
-    Student student = service.getStudentById(id);
-    List<StudentsCourses> studentCourses = service.getCoursesByStudentId(id);
-
-    StudentDetail studentDetail = new StudentDetail();
-    studentDetail.setId(student.getId());
-    studentDetail.setName(student.getName());
-    studentDetail.setAge(student.getAge());
-    studentDetail.setStudentsCourses(studentCourses);
-
-    model.addAttribute("StudentDetail", studentDetail);
-    return "registerStudent";
+  public String getStudentDetail(@PathVariable String id, Model model) {
+    StudentDetail studentDetail = service.searchStudent(id);
+    model.addAttribute("studentDetail", studentDetail);
+    return "updateStudent";
   }
+
 }
