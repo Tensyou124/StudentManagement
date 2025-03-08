@@ -67,6 +67,4 @@ public class StudentController {
     model.addAttribute("studentDetail", studentDetail);
     return "updateStudent";
   }
-
-
 }
