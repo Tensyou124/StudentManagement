@@ -1,18 +1,18 @@
 package student.management.StudentManagement.service;
 
+import java.time.LocalDate;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import student.management.StudentManagement.data.Student;
-import student.management.StudentManagement.data.StudentCourses;
+import student.management.StudentManagement.data.StudentsCourses;
 import student.management.StudentManagement.domain.StudentDetail;
 import student.management.StudentManagement.repository.StudentsRepository;
 
 @Service
 public class StudentService {
 
-  private StudentsRepository repository;
+  private final StudentsRepository repository;
 
   @Autowired
   public StudentService(StudentsRepository repository) {
@@ -20,17 +20,42 @@ public class StudentService {
   }
 
   public List<Student> searchStudentList() {
-    return repository.searchStudents();
+    return repository.search();
   }
 
-  public List<StudentCourses> searchCourseList() {
-    return repository.searchCourses();
+  public StudentDetail searchStudent(String id) {
+    Student student = repository.searchStudent(id);
+    List<StudentsCourses> studentsCourses = repository.searchStudentsCourses(student.getId());
+    StudentDetail studentDetail = new StudentDetail();
+    studentDetail.setStudent(student);
+    studentDetail.setStudentsCourses(studentsCourses);
+    return studentDetail;
   }
 
-  @Transactional
+  public List<StudentsCourses> searchCourseList() {
+    return repository.searchStudentsCourseList();
+  }
+
   public void registerStudent(StudentDetail studentDetail) {
     repository.registerStudent(studentDetail.getStudent());
+    for (StudentsCourses studentsCourses : studentDetail.getStudentsCourses()) {
+      studentsCourses.setStudentId(studentDetail.getStudent().getId());
+      studentsCourses.setCourseStartDate(LocalDate.now());
+      studentsCourses.setCourseEndDate(LocalDate.now().plusYears(1));
+      repository.registerStudentsCourses(studentsCourses);
+    }
   }
 
+  public void updateStudent(StudentDetail studentDetail) {
+    repository.updateStudent(studentDetail.getStudent());
 
+    if (studentDetail.getStudentsCourses() != null) {
+      for (StudentsCourses studentsCourses : studentDetail.getStudentsCourses()) {
+        studentsCourses.setStudentId(studentDetail.getStudent().getId());
+        studentsCourses.setCourseStartDate(LocalDate.now());
+        studentsCourses.setCourseEndDate(LocalDate.now().plusYears(1));
+        repository.registerStudentsCourses(studentsCourses);
+      }
+    }
+  }
 }

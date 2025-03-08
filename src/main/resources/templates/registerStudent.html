@@ -45,7 +45,7 @@
          font-family: monospace;
     }
 
-    .from-group label2 {
+    .from-group spam {
         width: -95px;
     }
 
@@ -75,46 +75,55 @@
 </head>
 <body>
 <h1>受講生登録</h1>
-<form th:action="@{/registerStudent}" th:object="${student}" method="post">
+<form th:action="@{/registerStudent}" th:object="${studentDetail}" method="post">
   <div class="from-group">
     <label for="name">名前</label>
-    <label2 for="name">:</label2>
+    <span for="name">:</span>
     <input type="text" id="name" th:field="*{student.name}" required  />
   </div>
   <div class="from-group">
     <label for="furigana">フリガナ</label>
-    <label2 for="furigana">:</label2>
+    <span for="furigana">:</span>
     <input type="text" id="furigana" th:field="*{student.furigana}" required  />
   </div>
   <div class="from-group">
     <label for="nickname">ニックネーム</label>
-    <label2 for="nickname">:</label2>
-    <input type="text" id="nickname" th:field="*{student.nickname}" required  />
+    <span for="nickname">:</span>
+    <input type="text" id="nickname" th:field="*{student.nickname}"   />
   </div>
   <div class="from-group">
     <label for="email">メールアドレス</label>
-    <label2 for="email">:</label2>
+    <span for="email">:</span>
     <input type="email" id="email" th:field="*{student.email}" required  />
   </div>
   <div class="from-group">
     <label for="area">地域</label>
-    <label2 for="area">:</label2>
+    <span for="area">:</span>
     <input type="text" id="area" th:field="*{student.area}" required  />
   </div>
   <div class="from-group">
     <label for="age">年齢</label>
-    <label2 for="age">:</label2>
+    <span for="age">:</span>
     <input type="text" id="age" th:field="*{student.age}" required  />
   </div>
   <div class="from-group">
     <label for="gender">性別</label>
-    <label2 for="gender">:</label2>
-    <input type="text" id="gender" th:field="*{student.gender}" required  />
+    <span for="gender">:</span>
+    <input type="text" id="gender" th:field="*{student.gender}"   />
   </div>
   <div class="from-group">
     <label for="remark">備考</label>
-    <label2 for="remark">:</label2>
+    <span for="remark">:</span>
     <input type="text" id="remark" th:field="*{student.remark}" />
+  </div>
+
+  <div class="from-group">
+    <div th:each="course, stat : *{studentsCourses}">
+      <label for="courseName" th:for="StudentCourse.__${stat.index}__].courseName">受講コース名</label> <!--この行でstudentscourses→studentsourseへ-->
+      <span for="courseName">:</span>
+      <input type="text" id="courseName" th:id="StudentCourse.__${stat.index}__].courseName"
+            th:field="*{studentsCourses[__${stat.index}__].courseName}" required /> <!--上の行でstudentscourses→studentsourseへ-->
+    </div>
   </div>
 
     <button type="submit">登録</button>
