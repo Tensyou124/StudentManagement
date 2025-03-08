@@ -18,8 +18,8 @@ import student.management.StudentManagement.service.StudentService;
 @Controller
 public class StudentController {
 
-  private StudentService service;
-  private StudentConverter converter;
+  private final StudentService service;
+  private final StudentConverter converter;
 
   @Autowired
   public StudentController(StudentService service, StudentConverter converter) {
@@ -67,4 +67,5 @@ public class StudentController {
     model.addAttribute("studentDetail", studentDetail);
     return "updateStudent";
   }
+
 }
