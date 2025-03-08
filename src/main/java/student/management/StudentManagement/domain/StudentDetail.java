@@ -1,13 +1,16 @@
-package student.management.StudentManagement.data;
+package student.management.StudentManagement.domain;
 
 import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
+import student.management.StudentManagement.data.Student;
+import student.management.StudentManagement.data.StudentsCourses;
 
 @Getter
 @Setter
-
-public class Student {
+public class StudentDetail {
+  @Setter
+  @Getter
   private String id;
   private String name;
   private String furigana;
@@ -17,7 +20,6 @@ public class Student {
   private int age;
   private String gender;
   private String remark;
-  private boolean isDeleted;
+  private Student student;
   private List<StudentsCourses> studentsCourses;
 }
-
