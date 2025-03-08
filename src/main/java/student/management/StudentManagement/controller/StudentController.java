@@ -68,4 +68,3 @@ public class StudentController {
     return "updateStudent";
   }
 }
-
