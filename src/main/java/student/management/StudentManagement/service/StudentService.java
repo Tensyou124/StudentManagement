@@ -37,7 +37,6 @@ public class StudentService {
     return repository.searchStudentsCourseList();
   }
 
-  @Transactional
   public void registerStudent(StudentDetail studentDetail) {
     repository.registerStudent(studentDetail.getStudent());
     for (StudentsCourses studentsCourses : studentDetail.getStudentsCourses()) {
@@ -48,11 +47,16 @@ public class StudentService {
     }
   }
 
-  @Transactional
   public void updateStudent(StudentDetail studentDetail) {
     repository.updateStudent(studentDetail.getStudent());
-    for (StudentsCourses studentsCourses : studentDetail.getStudentsCourses()) {
-      repository.updateStudentsCourses(studentsCourses);
+
+    if (studentDetail.getStudentsCourses() != null) {
+      for (StudentsCourses studentsCourses : studentDetail.getStudentsCourses()) {
+        studentsCourses.setStudentId(studentDetail.getStudent().getId());
+        studentsCourses.setCourseStartDate(LocalDate.now());
+        studentsCourses.setCourseEndDate(LocalDate.now().plusYears(1));
+        repository.registerStudentsCourses(studentsCourses);
+      }
     }
   }
 }
