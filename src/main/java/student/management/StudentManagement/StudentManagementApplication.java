@@ -10,8 +10,7 @@ import student.management.StudentManagement.repository.StudentsRepository;
 @RestController
 public class StudentManagementApplication {
 
-	@Autowired
-	private StudentsRepository repository;
+
 
 	public static void main(String[] args) {
 		SpringApplication.run(StudentManagementApplication.class, args);
