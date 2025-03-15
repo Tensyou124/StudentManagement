@@ -73,6 +73,7 @@
     }
   </style>
 </head>
+
 <body>
 <h1>受講生詳細</h1>
 <form th:action="@{/updateStudent}" th:object="${studentDetail}" method="post">
@@ -133,6 +134,11 @@
       <input type="text" id="courseName" th:id="StudentsCourses.__${stat.index}__].courseName"
              th:field="*{studentsCourses[__${stat.index}__].courseName}" />
     </div>
+  </div>
+
+  <div class="from-group">
+    <label for="isDeleted">キャンセル</label>
+    <input type="checkbox" id="isDeleted" th:field="*{student.isDeleted}" />
   </div>
 
   <button type="submit">更新</button>
