@@ -26,6 +26,6 @@ replay_pid*
 # intellij
 *.gradle
 *.idea
-build/
-gradle/wrapper/gradle-wrapper.jar
+build
 
+*.bin
