@@ -20,7 +20,7 @@ public class StudentService {
   }
 
   public List<Student> searchStudentList() {
-    return repository.search();
+    return repository.findByDeletedFalse();
   }
 
   public StudentDetail searchStudent(String id) {
@@ -48,14 +48,8 @@ public class StudentService {
 
   public void updateStudent(StudentDetail studentDetail) {
     repository.updateStudent(studentDetail.getStudent());
-
-    if (studentDetail.getStudentsCourses() != null) {
-      for (StudentsCourses studentsCourses : studentDetail.getStudentsCourses()) {
-        studentsCourses.setStudentId(studentDetail.getStudent().getId());
-        studentsCourses.setCourseStartDate(LocalDate.now());
-        studentsCourses.setCourseEndDate(LocalDate.now().plusYears(1));
-        repository.registerStudentsCourses(studentsCourses);
-      }
+    for (StudentsCourses studentsCourses : studentDetail.getStudentsCourses()) {
+      repository.updateStudentsCourses(studentsCourses);
     }
   }
 }

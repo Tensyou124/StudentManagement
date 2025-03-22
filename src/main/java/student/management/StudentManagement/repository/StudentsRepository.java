@@ -15,6 +15,9 @@ public interface StudentsRepository{
   @Select("SELECT * FROM students")
   List<Student> search();
 
+  @Select("SELECT * FROM students WHERE isDeleted = false")
+  List<Student> findByDeletedFalse();
+
   @Select("SELECT * FROM students WHERE id = #{id}")
   Student searchStudent(String id);
 
@@ -39,4 +42,5 @@ public interface StudentsRepository{
 
   @Update("UPDATE students_courses SET course_name = #{courseName} WHERE id = #{id}")
   void updateStudentsCourses(StudentsCourses studentsCourses);
+
 }
