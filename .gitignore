@@ -1,7 +1,3 @@
-#「*」を前につける→その拡張子のものは含まないようにする
-#「/」を最後につける→それ以降のものを含まないようにする
-#「ファイル名」→そのファイルだけを含まないようにする
-
 # Compiled class file
 *.class
 
@@ -30,6 +26,6 @@ replay_pid*
 # intellij
 *.gradle
 *.idea
-build
+build/
+gradle/wrapper/gradle-wrapper.jar
 
-.gradle/.gradle/
