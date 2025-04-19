@@ -2,69 +2,73 @@ package student.management.StudentManagement.controller;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import student.management.StudentManagement.controller.converter.StudentConverter;
-import student.management.StudentManagement.data.Student;
-import student.management.StudentManagement.data.StudentsCourses;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 import student.management.StudentManagement.domain.StudentDetail;
 import student.management.StudentManagement.service.StudentService;
 
-@Controller
+/**
+ * 受講生の検索や登録、更新などを行うREST APIとして実行されるController
+ */
+@RestController
 public class StudentController {
 
   private final StudentService service;
-  private final StudentConverter converter;
 
   @Autowired
-  public StudentController(StudentService service, StudentConverter converter) {
+  public StudentController(StudentService service) {
     this.service = service;
-    this.converter = converter;
   }
 
+  /**
+   * 受講生情報を取得する。
+   * 全件検索のため、条件指定は行わない。
+   *
+   * @return　受講生情報(全件数)
+   */
   @GetMapping("/studentList")
-  public String getStudentList(Model model) {
-    List<Student> students = service.searchStudentList();
-    List<StudentsCourses> studentsCourses = service.searchCourseList();
-    model.addAttribute("studentList", converter.convertStudentDetails(students, studentsCourses));
-    return "studentList";
+  public List<StudentDetail> getStudentList() {
+    return service.searchStudentList();
   }
 
-  @GetMapping("/newStudent")
-  public String newStudent(Model model) {
-    StudentDetail studentDetail = new StudentDetail();
-    studentDetail.setStudentsCourses(List.of(new StudentsCourses()));
-    model.addAttribute("studentDetail", studentDetail);
-    return "registerStudent";
-  }
-
-  @PostMapping("/registerStudent")
-  public String registerStudent(@ModelAttribute StudentDetail studentDetail, BindingResult result) {
-    if (result.hasErrors()) {
-      return "registerStudent";
-    }
-    service.registerStudent(studentDetail);
-    return "redirect:/studentList";
-  }
-
-  @PostMapping("/updateStudent")
-  public String updateStudent(@ModelAttribute StudentDetail studentDetail, BindingResult result) {
-    if (result.hasErrors()) {
-      return "updateStudent";
-    }
-    service.updateStudent(studentDetail);
-    return "redirect:/studentList";
-  }
-
+  /**
+   * 受講生情報を取得する。
+   * idに紐づく任意の受講生情報を取得する。
+   *
+   * @param id　受講生id
+   * @return　idに紐づく受講生情報
+   */
   @GetMapping("/students/{id}")
-  public String getStudentDetail(@PathVariable String id, Model model) {
+  public ResponseEntity<StudentDetail> getStudentDetail(@PathVariable String id) {
     StudentDetail studentDetail = service.searchStudent(id);
-    model.addAttribute("studentDetail", studentDetail);
-    return "updateStudent";
+    return ResponseEntity.ok(studentDetail);
+  }
+
+  /**
+   * 受講生情報を新たに登録する。
+   *
+   * @param studentDetail
+   * @return
+   */
+  @PostMapping("/registerStudent")
+  public ResponseEntity<StudentDetail> registerStudent(@RequestBody StudentDetail studentDetail) {
+    StudentDetail responseStudentDetail = service.registerStudent(studentDetail);
+    return ResponseEntity.ok(responseStudentDetail);
+  }
+
+  /**
+   * 既存の受講生情報を更新する。
+   *
+   * @param studentDetail
+   * @return
+   */
+  @PostMapping("/updateStudent")
+  public ResponseEntity<String> updateStudent(@RequestBody StudentDetail studentDetail) {
+    service.updateStudent(studentDetail);
+    return ResponseEntity.ok("更新処理が完了しました。");
   }
 }
