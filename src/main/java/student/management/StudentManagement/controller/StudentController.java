@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import student.management.StudentManagement.domain.StudentDetail;
@@ -25,10 +26,10 @@ public class StudentController {
   }
 
   /**
-   * 受講生情報を取得する。
+   * 受講生詳細を取得する。
    * 全件検索のため、条件指定は行わない。
    *
-   * @return　受講生情報(全件数)
+   * @return　受講生詳細(全件数)
    */
   @GetMapping("/studentList")
   public List<StudentDetail> getStudentList() {
@@ -36,11 +37,11 @@ public class StudentController {
   }
 
   /**
-   * 受講生情報を取得する。
-   * idに紐づく任意の受講生情報を取得する。
+   * 受講生詳細を取得する。
+   * idに紐づく任意の受講生詳細を取得する。
    *
    * @param id　受講生id
-   * @return　idに紐づく受講生情報
+   * @return　idに紐づく受講生詳細
    */
   @GetMapping("/students/{id}")
   public ResponseEntity<StudentDetail> getStudentDetail(@PathVariable String id) {
@@ -49,10 +50,10 @@ public class StudentController {
   }
 
   /**
-   * 受講生情報を新たに登録する。
+   * 受講生詳細を新たに登録する。
    *
-   * @param studentDetail
-   * @return
+   * @param studentDetail　受講生詳細
+   * @return 実行結果
    */
   @PostMapping("/registerStudent")
   public ResponseEntity<StudentDetail> registerStudent(@RequestBody StudentDetail studentDetail) {
@@ -61,12 +62,14 @@ public class StudentController {
   }
 
   /**
-   * 既存の受講生情報を更新する。
+   * 受講生詳細の更新を行う。
+   * キャンセルフラグの更新もここで行う。(論理削除)
+   * 処理が成功すると「更新処理が完了しました。」と表示される。
    *
-   * @param studentDetail
-   * @return
+   * @param studentDetail　受講生詳細
+   * @return　実行結果
    */
-  @PostMapping("/updateStudent")
+  @PutMapping("/updateStudent")
   public ResponseEntity<String> updateStudent(@RequestBody StudentDetail studentDetail) {
     service.updateStudent(studentDetail);
     return ResponseEntity.ok("更新処理が完了しました。");

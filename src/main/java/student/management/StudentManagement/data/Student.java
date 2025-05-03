@@ -17,6 +17,6 @@ public class Student {
   private String gender;
   private String remark;
   private Boolean isDeleted; //booleanをBooleanに変更することでエラーが出なくなった。
-  private List<StudentsCourses> studentsCourses;
+  private List<StudentCourse> studentsCours;
 }
 

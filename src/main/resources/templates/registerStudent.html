@@ -118,11 +118,11 @@
   </div>
 
   <div class="from-group">
-    <div th:each="course, stat : *{studentsCourses}">
+    <div th:each="course, stat : *{studentsCours}">
       <label for="courseName" th:for="StudentCourse.__${stat.index}__].courseName">受講コース名</label> <!--この行でstudentscourses→studentsourseへ-->
       <span for="courseName">:</span>
       <input type="text" id="courseName" th:id="StudentCourse.__${stat.index}__].courseName"
-            th:field="*{studentsCourses[__${stat.index}__].courseName}" required /> <!--上の行でstudentscourses→studentsourseへ-->
+            th:field="*{studentsCours[__${stat.index}__].courseName}" required /> <!--上の行でstudentscourses→studentsourseへ-->
     </div>
   </div>
 
