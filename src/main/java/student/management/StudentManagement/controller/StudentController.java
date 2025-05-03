@@ -1,8 +1,10 @@
 package student.management.StudentManagement.controller;
 
+import jakarta.validation.constraints.Size;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,6 +17,7 @@ import student.management.StudentManagement.service.StudentService;
 /**
  * 受講生の検索や登録、更新などを行うREST APIとして実行されるController
  */
+@Validated
 @RestController
 public class StudentController {
 
@@ -44,7 +47,7 @@ public class StudentController {
    * @return　idに紐づく受講生詳細
    */
   @GetMapping("/students/{id}")
-  public ResponseEntity<StudentDetail> getStudentDetail(@PathVariable String id) {
+  public ResponseEntity<StudentDetail> getStudentDetail(@PathVariable @Size(min=1,max=3) String id) {
     StudentDetail studentDetail = service.searchStudent(id);
     return ResponseEntity.ok(studentDetail);
   }
