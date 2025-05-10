@@ -124,15 +124,15 @@
   </div>
 
   <div class="from-group">
-    <div th:each="course, stat : *{studentsCourses}">
+    <div th:each="course, stat : *{studentsCours}">
       <label for="id" th:for="StudentsCourses.__${stat.index}__].id">受講コースID</label>
       <span for="courseName">:</span>
       <input type="text" id="id" th:id="StudentsCourses.__${stat.index}__].id"
-             th:field="*{studentsCourses[__${stat.index}__].id}" />
+             th:field="*{studentsCours[__${stat.index}__].id}" />
       <label for="courseName" th:for="StudentsCourses.__${stat.index}__].courseName">受講コース名</label>
       <span for="courseName">:</span>
       <input type="text" id="courseName" th:id="StudentsCourses.__${stat.index}__].courseName"
-             th:field="*{studentsCourses[__${stat.index}__].courseName}" />
+             th:field="*{studentsCours[__${stat.index}__].courseName}" />
     </div>
   </div>
 
