@@ -1,25 +1,14 @@
 package student.management.StudentManagement.controller.exception;
 
+import java.util.stream.Collectors;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import student.management.StudentManagement.exception.TestException;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
-
-  /**
-   * 独自のTestExceptionを処理する。
-   *
-   * @param ex
-   * @return　エラーメッセージ
-   */
-  @ExceptionHandler(TestException.class)
-  public ResponseEntity<String> handleTestException(TestException ex) {
-    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
-  }
 
   /**
    * バリデーションエラー(@void)による例外を処理する。
@@ -29,7 +18,13 @@ public class GlobalExceptionHandler {
    */
   @ExceptionHandler(MethodArgumentNotValidException.class)
   public ResponseEntity<String> handleValidationException(MethodArgumentNotValidException ex) {
-    return ResponseEntity.badRequest().body("入力エラー： " + ex.getMessage());
+    String errorMessages = ex.getBindingResult()
+        .getFieldErrors()
+        .stream()
+        .map(error -> error.getDefaultMessage())
+        .distinct()
+        .collect(Collectors.joining("\n"));
+    return ResponseEntity.badRequest().body("入力エラー：\n\n" + errorMessages);
   }
 
   /**
@@ -41,7 +36,7 @@ public class GlobalExceptionHandler {
   @ExceptionHandler(Exception.class)
   public ResponseEntity<String> handleOtherException(Exception ex) {
     return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .body("サーバーエラー：" + ex.getMessage());
+        .body("サーバーエラー：\n" + ex.getMessage());
   }
 
 }
