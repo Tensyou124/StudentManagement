@@ -9,21 +9,43 @@ import org.apache.ibatis.annotations.Update;
 import student.management.StudentManagement.data.Student;
 import student.management.StudentManagement.data.StudentsCourses;
 
+/**
+ * 受講生情報テーブルと受講生コース情報テーブルと紐づくRepository。
+ */
 @Mapper
 public interface StudentsRepository{
 
+  /**
+   * 受講生情報の全件検索を行う。
+   *
+   * @return　受講生情報(全件数)
+   */
   @Select("SELECT * FROM students")
   List<Student> search();
 
-  @Select("SELECT * FROM students WHERE isDeleted = false")
-  List<Student> findByDeletedFalse();
-
+  /**
+   * idに紐づく受講生情報の検索を行う。
+   *
+   * @param id　受講生id
+   * @return　idに紐づく受講生情報
+   */
   @Select("SELECT * FROM students WHERE id = #{id}")
   Student searchStudent(String id);
 
+  /**
+   * 受講生コース情報の全件検索を行う。
+   *
+   * @return　受講生コース情報(全件数)
+   */
   @Select("SELECT * FROM students_courses")
   List<StudentsCourses> searchStudentsCourseList();
 
+  /**
+   * idに紐づく受講生コース情報の検索。
+   *
+   * @param studentId　受講生id
+   * @return　受講生idに紐づく受講生コース情報
+   */
   @Select("SELECT * FROM students_courses WHERE student_id = #{studentId}")
   List<StudentsCourses> searchStudentsCourses(String studentId);
 
