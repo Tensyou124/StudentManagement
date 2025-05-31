@@ -31,32 +31,33 @@
   <!--受講生の新規登録-->
   <insert id="registerStudent" parameterType="student.management.StudentManagement.data.Student" useGeneratedKeys="true" keyProperty="id">
     INSERT INTO students
-    (name, furigana, nickname, email, area, age, gender, remark, isDeleted)
+      (name, furigana, nickname, email, area, age, gender, remark, isDeleted)
     VALUES
-    (#{name}, #{furigana}, #{nickname}, #{email}, #{area}, #{age}, #{gender}, #{remark}, false)
+      (#{name}, #{furigana}, #{nickname}, #{email}, #{area}, #{age}, #{gender}, #{remark}, false)
   </insert>
 
   <!--受講生コース情報の新規登録-->
   <insert id="registerStudentCourse" parameterType="student.management.StudentManagement.data.Student" useGeneratedKeys="true" keyProperty="id">
     INSERT INTO students_courses
-    (student_id, course_name, course_start_date, course_end_date)
+      (student_id, course_name, course_start_date, course_end_date)
     VALUES
-    (#{studentId}, #{courseName}, #{courseStartDate}, #{courseEndDate})
+      (#{studentId}, #{courseName}, #{courseStartDate}, #{courseEndDate})
   </insert>
 
   <!--受講生詳細の更新-->
   <update id="updateStudent" parameterType="student.management.StudentManagement.data.Student">
     UPDATE students
-    SET name = #{name},
-    furigana = #{furigana},
-    nickname = #{nickname},
-    email = #{email},
-    area = #{area},
-    age = #{age},
-    gender = #{gender},
-    remark = #{remark},
-    isDeleted = #{isDeleted}
-    WHERE id = #{id}
+    SET
+      name = #{name},
+      furigana = #{furigana},
+      nickname = #{nickname},
+      email = #{email},
+      area = #{area},
+      age = #{age},
+      gender = #{gender},
+      remark = #{remark},
+      isDeleted = #{isDeleted}
+      WHERE id = #{id}
   </update>
 
   <!--受講生コース情報のコース名を変更-->
