@@ -45,9 +45,9 @@
   </insert>
 
   <!--受講生詳細の更新-->
-  <update id="updateStudent" parameterType="student.management.StudentManagement.data.Student">
-    UPDATE students
-    SET
+<update id="updateStudent" parameterType="student.management.StudentManagement.data.Student">
+  UPDATE students
+  SET
     name = #{name},
     furigana = #{furigana},
     nickname = #{nickname},
@@ -57,9 +57,8 @@
     gender = #{gender},
     remark = #{remark},
     isDeleted = #{isDeleted}
-    WHERE id = #{id}
-  </update>
-
+  WHERE id = #{id}
+</update>
 
   <!--受講生コース情報のコース名を変更-->
   <update id="updateStudentCourse" parameterType="student.management.StudentManagement.data.Student">
