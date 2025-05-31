@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import student.management.StudentManagement.domain.StudentDetail;
+import student.management.StudentManagement.exception.TestException;
 import student.management.StudentManagement.service.StudentService;
 
 /**
@@ -48,7 +49,7 @@ public class StudentController {
    * @return　idに紐づく受講生詳細
    */
   @GetMapping("/students/{id}")
-  public ResponseEntity<StudentDetail> getStudentDetail(@PathVariable @Size(min=1,max=3) String id) {
+  public ResponseEntity<StudentDetail> getStudentDetail(@PathVariable @Size(min=1,max=4) String id) {
     StudentDetail studentDetail = service.searchStudent(id);
     return ResponseEntity.ok(studentDetail);
   }
@@ -77,5 +78,15 @@ public class StudentController {
   public ResponseEntity<String> updateStudent(@RequestBody @Valid StudentDetail studentDetail) {
     service.updateStudent(studentDetail);
     return ResponseEntity.ok("更新処理が完了しました。");
+  }
+
+  /**
+   * テスト用の例外を発生させるAPI。
+   *
+   * @return なし（常に例外をスローする）
+   */
+  @GetMapping("/testException")
+  public void throwTestException() throws TestException {
+    throw new TestException("これはテスト用の例外です。");
   }
 }
