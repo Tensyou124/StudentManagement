@@ -47,8 +47,8 @@ public class StudentService {
    */
   public StudentDetail searchStudent(String id) {
     Student student = repository.searchStudent(id);
-    List<StudentCourse> studentsCours = repository.searchStudentCourse(student.getId());
-    return new StudentDetail(student, studentsCours);
+    List<StudentCourse> studentsCourse = repository.searchStudentCourse(student.getId());
+    return new StudentDetail(student, studentsCourse);
   }
 
   /**
@@ -75,7 +75,7 @@ public class StudentService {
    * @param studentCourse　受講生コース情報
    * @param student　受講生
    */
-  private void initStudentsCourse(StudentCourse studentCourse, Student student) {
+  public void initStudentsCourse(StudentCourse studentCourse, Student student) {
     LocalDate now = LocalDate.now();
     studentCourse.setStudentId(student.getId());
     studentCourse.setCourseStartDate(now);
